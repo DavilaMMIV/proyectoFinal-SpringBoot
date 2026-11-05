@@ -33,7 +33,7 @@ public class ConfiguracionSeguridad {
     SecurityFilterChain cadenaDeSeguridad(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(
-                        a -> a.requestMatchers("/", "/iniciar-sesion", "/registro", "/estilos.css", "/imagenes/**", "/error")
+                        a -> a.requestMatchers("/", "/iniciar-sesion", "/registro", "/estilos.css", "/estilos-login.css", "/imagenes/**", "/error")
                                 .permitAll().requestMatchers("/administracion/**").hasRole("ADMINISTRADOR")
                                 .requestMatchers("/alquilar/**", "/mis-alquileres", "/mis-visitas/**").hasRole("USUARIO").anyRequest()
                                 .authenticated())

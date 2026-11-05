@@ -1,0 +1,98 @@
+/* Estilos exclusivos de la pantalla de inicio de sesión. */
+header.barra-navegacion {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 18px 28px;
+    background: #263f35;
+    color: #fff;
+    border: 1px solid #ffffff20;
+    border-radius: 0;
+    box-shadow: 0 8px 24px #263f3526;
+}
+
+.barra-navegacion .marca {
+    color: #fff;
+}
+
+.barra-navegacion .marca span {
+    color: #d4e6d5;
+}
+
+.barra-navegacion nav {
+    margin-left: auto;
+    gap: 12px;
+}
+
+.barra-navegacion .boton-navegacion {
+    padding: 11px 20px;
+    border: 1px solid #ffffff60;
+    border-radius: 10px;
+    background: #ffffff10;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    transition: background-color .2s ease, color .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+
+.barra-navegacion .boton-navegacion:hover,
+.barra-navegacion .boton-navegacion:focus-visible {
+    background: #e2eedb;
+    color: #263f35;
+    border-color: #e2eedb;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 12px #0003;
+}
+
+.barra-navegacion .boton-navegacion:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+@media (max-width: 520px) {
+    header.barra-navegacion {
+        padding: 16px;
+    }
+
+    .barra-navegacion nav {
+        gap: 8px;
+    }
+
+    .barra-navegacion .boton-navegacion {
+        padding: 10px 12px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .barra-navegacion .boton-navegacion {
+        transition: none;
+        transform: none;
+    }
+}
+
+.btn-primary {
+    --bs-btn-bg: var(--green);
+    --bs-btn-border-color: var(--green);
+    --bs-btn-hover-bg: #244333;
+    --bs-btn-hover-border-color: #244333;
+    --bs-btn-active-bg: #1c3628;
+    --bs-btn-active-border-color: #1c3628;
+    --bs-btn-focus-shadow-rgb: 49, 89, 69;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #779f81;
+    box-shadow: 0 0 0 .25rem #31594520;
+}
+
+.form-label {
+    display: block;
+    width: 100%;
+}
+
+.contenedor-formulario {
+    padding: 32px;
+    border: 1px solid #dce3d7;
+    border-radius: 12px;
+}
