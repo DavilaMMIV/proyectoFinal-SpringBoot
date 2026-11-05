@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Habita · Tu próximo hogar</title>
+    <link rel="stylesheet" href="/estilos.css">
+</head>
+
+<body>
+    <header><a class="marca" href="/">▦ habita<span>CONDOMINIOS</span></a>
+        <nav><a href="/">Explorar</a><a href="/panel" th:if="${sesionIniciada}"
+                th:text="${esAdministrador ? 'Administración' : 'Mi espacio'}">Mi espacio</a><a href="/iniciar-sesion"
+                th:unless="${sesionIniciada}">Iniciar sesión</a></nav>
+    </header>
+    <main>
+        <section class="contenedor-formulario">
+            <p class="antetitulo">HABITA</p>
+            <h1>No pudimos abrir esta página.</h1>
+            <p>Puede que no exista o que tu cuenta no tenga acceso.</p><a class="boton" href="/">Volver al inicio</a>
+        </section>
+    </main>
+    <footer><span class="marca">habita</span><span>Un lugar para vivir mejor. · Rentas en MXN</span>
+        <form th:if="${sesionIniciada}" th:action="@{/cerrar-sesion}" method="post"><button class="texto"
+                type="submit">Cerrar sesión</button></form>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Habita · Tu próximo hogar</title>
+    <link rel="stylesheet" href="/estilos.css">
+</head>
+
+<body>
+    <header><a class="marca" href="/">▦ habita<span>CONDOMINIOS</span></a>
+        <nav><a href="/">Explorar</a><a href="/panel" th:if="${sesionIniciada}"
+                th:text="${esAdministrador ? 'Administración' : 'Mi espacio'}">Mi espacio</a><a href="/iniciar-sesion"
+                th:unless="${sesionIniciada}">Iniciar sesión</a></nav>
+    </header>
+    <main>
+        <p><a class="boton" href="/administracion/accesos">Control de entradas y salidas</a></p>
+        <div class="titulo-seccion">
+            <div>
+                <p class="antetitulo">ADMINISTRACIÓN</p>
+                <h1>Todo en su lugar.</h1>
+                <p>Un panorama de tu comunidad y sus residentes.</p>
+            </div><a class="boton" href="/administracion/reporte.pdf">↓ Descargar reporte PDF</a>
+        </div>
+        <div class="estadisticas">
+            <article><small>Condominios totales</small><strong th:text="${total}"></strong></article>
+            <article><small>Condominios ocupados</small><strong th:text="${ocupados}"></strong></article>
+            <article><small>Disponibles</small><strong th:text="${total - ocupados}"></strong></article>
+            <article><small>Renta mensual registrada · MXN</small><strong th:text="${'$' + ingresos}"></strong>
+            </article>
+        </div>
+        <h2>Directorio de residentes</h2>
+        <p class="atenuado">Las rentas registradas no representan pagos cobrados.</p>
+        <div class="contenedor-tabla">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Residente</th>
+                        <th>Contacto</th>
+                        <th>Condominio</th>
+                        <th>Folio de identificación</th>
+                        <th>Inicio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="r : ${alquileres}">
+                        <td th:text="${r.cuenta.nombre}"></td>
+                        <td><span th:text="${r.cuenta.correo}"></span><br><small th:text="${r.cuenta.telefono}"></small>
+                        </td>
+                        <td th:text="${r.condominio.nombre}"></td>
+                        <td class="codigo" th:text="${r.folio}"></td>
+                        <td th:text="${r.fechaInicio}"></td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(alquileres)}">
+                        <td colspan="5">Todavía no hay alquileres registrados.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <footer><span class="marca">habita</span><span>Un lugar para vivir mejor. · Rentas en MXN</span>
+        <form th:if="${sesionIniciada}" th:action="@{/cerrar-sesion}" method="post"><button class="texto"
+                type="submit">Cerrar sesión</button></form>
+    </footer>
+</body>
+
+</html>

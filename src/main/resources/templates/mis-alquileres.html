@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Habita · Tu próximo hogar</title>
+    <link rel="stylesheet" href="/estilos.css">
+</head>
+
+<body>
+    <header><a class="marca" href="/">▦ habita<span>CONDOMINIOS</span></a>
+        <nav><a href="/">Explorar</a><a href="/panel" th:if="${sesionIniciada}"
+                th:text="${esAdministrador ? 'Administración' : 'Mi espacio'}">Mi espacio</a><a href="/iniciar-sesion"
+                th:unless="${sesionIniciada}">Iniciar sesión</a></nav>
+    </header>
+    <main>
+        <p><a class="boton" href="/mis-visitas">Mis visitas y accesos</a></p>
+        <div class="titulo-seccion">
+            <div>
+                <p class="antetitulo">MI ESPACIO</p>
+                <h1>Bienvenido a casa.</h1>
+            </div><a class="boton" href="/#catalogo">Explorar condominios ↗</a>
+        </div>
+        <p class="aviso" th:if="${exito}" th:text="${exito}"></p>
+        <div class="vacio" th:if="${#lists.isEmpty(alquileres)}">
+            <h2>Tu próximo hogar te espera</h2>
+            <p>Aún no tienes un condominio alquilado.</p><a href="/#catalogo">Ver espacios disponibles →</a>
+        </div>
+        <article class="alquiler" th:each="r : ${alquileres}">
+            <p class="antetitulo">TU CONDOMINIO</p>
+            <h2 th:text="${r.condominio.nombre}"></h2>
+            <p th:text="${'Residente: ' + r.cuenta.nombre}"></p>
+            <p th:text="${'Inicio: ' + r.fechaInicio + ' · $' + r.condominio.precio + ' MXN / mes'}"></p>
+            <div class="folio"><small>FOLIO PERSONAL DE IDENTIFICACIÓN</small><strong th:text="${r.folio}"></strong>
+                <p>Este folio identifica tu alquiler. Las entradas y salidas las registra el personal en el control de accesos.</p>
+            </div>
+        </article>
+    </main>
+    <footer><span class="marca">habita</span><span>Un lugar para vivir mejor. · Rentas en MXN</span>
+        <form th:if="${sesionIniciada}" th:action="@{/cerrar-sesion}" method="post"><button class="texto"
+                type="submit">Cerrar sesión</button></form>
+    </footer>
+</body>
+
+</html>

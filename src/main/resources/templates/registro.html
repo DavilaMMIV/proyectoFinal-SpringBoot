@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Habita · Tu próximo hogar</title>
+    <link rel="stylesheet" href="/estilos.css">
+</head>
+
+<body>
+    <header><a class="marca" href="/">▦ habita<span>CONDOMINIOS</span></a>
+        <nav><a href="/">Explorar</a><a href="/panel" th:if="${sesionIniciada}"
+                th:text="${esAdministrador ? 'Administración' : 'Mi espacio'}">Mi espacio</a><a href="/iniciar-sesion"
+                th:unless="${sesionIniciada}">Iniciar sesión</a></nav>
+    </header>
+    <main>
+        <section class="contenedor-formulario">
+            <p class="antetitulo">COMIENZA TU HISTORIA</p>
+            <h1>Crea tu cuenta</h1>
+            <p>Usaremos estos datos para identificarte como residente.</p>
+            <p class="aviso error" th:if="${error}" th:text="${error}"></p>
+            <form th:action="@{/registro}" method="post" th:object="${registro}"><label>Nombre completo y
+                    apellidos<input th:field="*{nombre}" autocomplete="name" minlength="5" maxlength="120"
+                        required></label><label>Correo electrónico<input type="email" th:field="*{correo}"
+                        autocomplete="email" maxlength="180" required></label><label>Teléfono<input type="tel"
+                        th:field="*{telefono}" autocomplete="tel" pattern="[+0-9 ()\-]{10,20}" maxlength="20"
+                        required></label><label>Contraseña<input type="password" name="contrasena" minlength="12"
+                        maxlength="72" autocomplete="new-password" required><small>Mínimo 12
+                        caracteres.</small></label><button>Crear cuenta →</button></form>
+            <p>¿Ya tienes cuenta? <a href="/iniciar-sesion">Inicia sesión</a></p>
+        </section>
+    </main>
+    <footer><span class="marca">habita</span><span>Un lugar para vivir mejor. · Rentas en MXN</span>
+        <form th:if="${sesionIniciada}" th:action="@{/cerrar-sesion}" method="post"><button class="texto"
+                type="submit">Cerrar sesión</button></form>
+    </footer>
+</body>
+
+</html>

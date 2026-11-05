@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: condominios
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "123456"
+    ports:
+      - "127.0.0.1:5434:5432"
+    volumes:
+      - datos_postgres:/var/lib/postgresql
+
+volumes:
+  datos_postgres:

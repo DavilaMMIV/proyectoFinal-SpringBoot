@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Habita · Tu próximo hogar</title>
+    <link rel="stylesheet" href="/estilos.css">
+</head>
+
+<body>
+    <header><a class="marca" href="/">▦ habita<span>CONDOMINIOS</span></a>
+        <nav><a href="/">Explorar</a><a href="/panel" th:if="${sesionIniciada}"
+                th:text="${esAdministrador ? 'Administración' : 'Mi espacio'}">Mi espacio</a><a href="/iniciar-sesion"
+                th:unless="${sesionIniciada}">Iniciar sesión</a></nav>
+    </header>
+    <main>
+        <section class="portada">
+            <div>
+                <p class="antetitulo">ESPACIOS QUE SE SIENTEN COMO TÚ</p>
+                <h1>Tu siguiente capítulo<br>empieza en <em>casa.</em></h1>
+                <p>Encuentra tu condominio, elige cuándo mudarte y administra tu estancia en un solo lugar.</p><a
+                    class="boton" href="#catalogo">Encuentra tu espacio ↗</a>
+                <div class="pasos"><span>01 / Explora</span><span>02 / Alquila</span><span>03 / Habita</span></div>
+            </div>
+            <div class="arquitectura">
+                <img class="foto-portada" src="/imagenes/portada.jpg" alt="Interior de un condominio Habita"
+                    width="800" height="450" fetchpriority="high">
+                <span class="leyenda">Diseñado para tu día a día.</span>
+            </div>
+        </section>
+        <section id="catalogo">
+            <div class="titulo-seccion">
+                <div>
+                    <p class="antetitulo">ENCUENTRA TU LUGAR</p>
+                    <h2>Espacios disponibles para ti</h2>
+                </div><span>Comodidad en cada detalle</span>
+            </div>
+            <div class="cuadricula">
+                <article class="tarjeta" th:each="c : ${condominios}">
+                    <div class="ilustracion-vivienda" th:classappend="${c.id % 2 == 0 ? 'calido' : ''}">
+                        <div class="ventana-habitacion"></div>
+                        <div class="sofa"></div>
+                        <img class="foto-condominio" th:src="@{/imagenes/condominios/{id}.jpg(id=${c.id})}"
+                            th:alt="${'Fotografía de ' + c.nombre}" width="800" height="450" loading="lazy"
+                            decoding="async" onerror="this.hidden = true">
+                        <span class="etiqueta"
+                            th:text="${ocupados.contains(c.id) ? 'Alquilado' : 'Disponible'}"></span>
+                    </div>
+                    <div class="contenido-tarjeta">
+                        <h3 th:text="${c.nombre}"></h3>
+                        <p th:text="${c.ubicacion}"></p>
+                        <div class="caracteristicas"><span th:text="${c.recamaras + ' recámaras'}"></span><span
+                                th:text="${c.area + ' m²'}"></span></div>
+                        <div class="pie-tarjeta">
+                            <div><strong
+                                    th:text="${'$' + #numbers.formatInteger(c.precio, 1, 'COMMA')}"></strong><small> /
+                                    mes</small></div><a class="flecha" th:unless="${ocupados.contains(c.id)}"
+                                th:href="@{/alquilar/{id}(id=${c.id})}" th:aria-label="${'Alquilar ' + c.nombre}">↗</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+    <footer><span class="marca">habita</span><span>Un lugar para vivir mejor. · Rentas en MXN</span>
+        <form th:if="${sesionIniciada}" th:action="@{/cerrar-sesion}" method="post"><button class="texto"
+                type="submit">Cerrar sesión</button></form>
+    </footer>
+</body>
+
+</html>
