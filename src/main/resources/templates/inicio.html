@@ -5,22 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Habita · Tu próximo hogar</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="/estilos.css">
 </head>
 
 <body>
-    <header><a class="marca" href="/">▦ habita<span>CONDOMINIOS</span></a>
-        <nav><a href="/">Explorar</a><a href="/panel" th:if="${sesionIniciada}"
-                th:text="${esAdministrador ? 'Administración' : 'Mi espacio'}">Mi espacio</a><a href="/iniciar-sesion"
+    <header class="barra-navegacion navbar d-flex flex-wrap gap-3"><a class="marca" href="/">▦ habita<span>CONDOMINIOS</span></a>
+        <nav class="flex-wrap" aria-label="Navegación principal"><a class="btn boton-navegacion" href="/">Explorar</a><a class="btn boton-navegacion" href="/panel" th:if="${sesionIniciada}"
+                th:text="${esAdministrador ? 'Administración' : 'Mi espacio'}">Mi espacio</a><a class="btn boton-navegacion" href="/iniciar-sesion"
                 th:unless="${sesionIniciada}">Iniciar sesión</a></nav>
     </header>
-    <main>
+    <main class="container-fluid">
         <section class="portada">
             <div>
                 <p class="antetitulo">ESPACIOS QUE SE SIENTEN COMO TÚ</p>
                 <h1>Tu siguiente capítulo<br>empieza en <em>casa.</em></h1>
                 <p>Encuentra tu condominio, elige cuándo mudarte y administra tu estancia en un solo lugar.</p><a
-                    class="boton" href="#catalogo">Encuentra tu espacio ↗</a>
+                    class="boton btn btn-primary" href="#catalogo">Encuentra tu espacio ↗</a>
                 <div class="pasos"><span>01 / Explora</span><span>02 / Alquila</span><span>03 / Habita</span></div>
             </div>
             <div class="arquitectura">
@@ -37,7 +39,7 @@
                 </div><span>Comodidad en cada detalle</span>
             </div>
             <div class="cuadricula">
-                <article class="tarjeta" th:each="c : ${condominios}">
+                <article class="tarjeta card h-100 shadow-sm" th:each="c : ${condominios}">
                     <div class="ilustracion-vivienda" th:classappend="${c.id % 2 == 0 ? 'calido' : ''}">
                         <div class="ventana-habitacion"></div>
                         <div class="sofa"></div>
@@ -47,7 +49,7 @@
                         <span class="etiqueta"
                             th:text="${ocupados.contains(c.id) ? 'Alquilado' : 'Disponible'}"></span>
                     </div>
-                    <div class="contenido-tarjeta">
+                    <div class="contenido-tarjeta card-body">
                         <h3 th:text="${c.nombre}"></h3>
                         <p th:text="${c.ubicacion}"></p>
                         <div class="caracteristicas"><span th:text="${c.recamaras + ' recámaras'}"></span><span
@@ -63,8 +65,8 @@
             </div>
         </section>
     </main>
-    <footer><span class="marca">habita</span><span>Un lugar para vivir mejor. · Rentas en MXN</span>
-        <form th:if="${sesionIniciada}" th:action="@{/cerrar-sesion}" method="post"><button class="texto"
+    <footer><span class="marca">habita</span>
+        <form th:if="${sesionIniciada}" th:action="@{/cerrar-sesion}" method="post"><button class="btn btn-primary"
                 type="submit">Cerrar sesión</button></form>
     </footer>
 </body>

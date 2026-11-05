@@ -5,24 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Habita · Tu próximo hogar</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="/estilos.css">
 </head>
 
 <body>
-    <header><a class="marca" href="/">▦ habita<span>CONDOMINIOS</span></a>
-        <nav><a href="/">Explorar</a><a href="/panel" th:if="${sesionIniciada}"
-                th:text="${esAdministrador ? 'Administración' : 'Mi espacio'}">Mi espacio</a><a href="/iniciar-sesion"
+    <header class="barra-navegacion navbar d-flex flex-wrap gap-3"><a class="marca" href="/">▦ habita<span>CONDOMINIOS</span></a>
+        <nav class="flex-wrap" aria-label="Navegación principal"><a class="btn boton-navegacion" href="/">Explorar</a><a class="btn boton-navegacion" href="/panel" th:if="${sesionIniciada}"
+                th:text="${esAdministrador ? 'Administración' : 'Mi espacio'}">Mi espacio</a><a class="btn boton-navegacion" href="/iniciar-sesion"
                 th:unless="${sesionIniciada}">Iniciar sesión</a></nav>
     </header>
-    <main>
-        <section class="contenedor-formulario">
+    <main class="container-fluid">
+        <section class="contenedor-formulario card shadow-sm">
             <p class="antetitulo">HABITA</p>
             <h1>No pudimos abrir esta página.</h1>
-            <p>Puede que no exista o que tu cuenta no tenga acceso.</p><a class="boton" href="/">Volver al inicio</a>
+            <p>Puede que no exista o que tu cuenta no tenga acceso.</p><a class="boton btn btn-primary" href="/">Volver al inicio</a>
         </section>
     </main>
-    <footer><span class="marca">habita</span><span>Un lugar para vivir mejor. · Rentas en MXN</span>
-        <form th:if="${sesionIniciada}" th:action="@{/cerrar-sesion}" method="post"><button class="texto"
+    <footer><span class="marca">habita</span>
+        <form th:if="${sesionIniciada}" th:action="@{/cerrar-sesion}" method="post"><button class="btn btn-primary"
                 type="submit">Cerrar sesión</button></form>
     </footer>
 </body>

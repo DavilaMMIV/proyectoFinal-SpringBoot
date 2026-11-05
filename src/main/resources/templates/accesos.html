@@ -5,61 +5,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Habita · Control de accesos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="/estilos.css">
 </head>
 
 <body>
-    <header><a class="marca" href="/">▦ habita<span>CONDOMINIOS</span></a>
-        <nav><a href="/panel">Mi panel</a></nav>
+    <header class="barra-navegacion navbar d-flex flex-wrap gap-3"><a class="marca" href="/">▦ habita<span>CONDOMINIOS</span></a>
+        <nav class="flex-wrap" aria-label="Navegación principal"><a class="btn boton-navegacion" href="/panel">Mi panel</a></nav>
     </header>
-    <main>
+    <main class="container-fluid">
         <h1 th:text="${administrador ? 'Control de entradas y salidas' : 'Mis visitas y accesos'}"></h1>
-        <p class="aviso" th:if="${exito}" th:text="${exito}"></p>
-        <p class="aviso" role="alert" th:if="${error}" th:text="${error}"></p>
+        <p class="aviso alert alert-success" role="status" th:if="${exito}" th:text="${exito}"></p>
+        <p class="aviso error alert alert-danger" role="alert" th:if="${error}" th:text="${error}"></p>
         <section th:unless="${administrador}">
             <h2>Autorizar una visita</h2>
             <p>El código permite una sola entrada en la fecha indicada. Compártelo únicamente con tu visitante; el
                 personal comprobará su identidad al llegar.</p>
             <p th:if="${#lists.isEmpty(alquileres)}">Necesitas un alquiler para autorizar visitas.</p>
             <form th:unless="${#lists.isEmpty(alquileres)}" th:action="@{/mis-visitas}" method="post">
-                <label>Condominio<select name="alquilerId" required>
+                <label class="form-label">Condominio<select class="form-select" name="alquilerId" required>
                         <option th:each="r : ${alquileres}" th:value="${r.id}" th:text="${r.condominio.nombre}">
                         </option>
                     </select></label>
-                <label>Nombre completo del visitante<input name="nombre" maxlength="120" required></label>
-                <label>Fecha de visita<input type="date" name="fecha" th:min="${hoy}" required></label><button
-                    class="boton" type="submit">Autorizar visita</button>
+                <label class="form-label">Nombre completo del visitante<input class="form-control" name="nombre" maxlength="120" required></label>
+                <label class="form-label">Fecha de visita<input class="form-control" type="date" name="fecha" th:min="${hoy}" required></label><button
+                    class="boton btn btn-primary" type="submit">Autorizar visita</button>
             </form>
         </section>
         <section th:if="${administrador}">
             <p>Comprueba la identidad de la persona antes de registrar la entrada. Los horarios corresponden a la zona
                 horaria del servidor.</p>
             <h2>Entrada de visitante</h2>
-            <form th:action="@{/administracion/accesos/visita}" method="post"><label>Código de autorización<input
-                        name="codigo" required maxlength="36"></label><button class="boton" type="submit">Validar y
+            <form th:action="@{/administracion/accesos/visita}" method="post"><label class="form-label">Código de autorización<input
+                        name="codigo" required maxlength="36"></label><button class="boton btn btn-primary" type="submit">Validar y
                     registrar entrada</button></form>
             <h2>Entrada de residente</h2>
-            <form th:action="@{/administracion/accesos/residente}" method="post"><label>Residente y condominio<select
+            <form th:action="@{/administracion/accesos/residente}" method="post"><label class="form-label">Residente y condominio<select
                         name="alquilerId" required>
                         <option th:each="r : ${alquileres}" th:value="${r.id}"
                             th:text="${r.cuenta.nombre + ' · ' + r.condominio.nombre}"></option>
-                    </select></label><button class="boton" type="submit">Registrar entrada</button></form>
+                    </select></label><button class="boton btn btn-primary" type="submit">Registrar entrada</button></form>
         </section>
         <h2>Historial y autorizaciones</h2>
-        <p th:if="${administrador}"><a class="boton" href="/administracion/accesos/reporte.pdf"
+        <p th:if="${administrador}"><a class="boton btn btn-primary" href="/administracion/accesos/reporte.pdf"
                 target="_blank" rel="noopener">Imprimir reporte de accesos (PDF)</a></p>
-        <div class="contenedor-tabla">
-            <table>
+        <div class="contenedor-tabla table-responsive">
+            <table class="table table-hover align-middle mb-0">
                 <thead>
                     <tr>
-                        <th>Persona</th>
-                        <th>Tipo / Condominio</th>
-                        <th>Fecha / Código de visita</th>
-                        <th>Estado</th>
-                        <th>Entrada</th>
-                        <th>Salida</th>
-                        <th th:if="${administrador}">Registrado por (entrada / salida)</th>
-                        <th>Acción</th>
+                        <th scope="col">Persona</th>
+                        <th scope="col">Tipo / Condominio</th>
+                        <th scope="col">Fecha / Código de visita</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Entrada</th>
+                        <th scope="col">Salida</th>
+                        <th scope="col" th:if="${administrador}">Registrado por (entrada / salida)</th>
+                        <th scope="col">Acción</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -78,11 +80,11 @@
                                 th:text="${a.salidaPor}"></span></td>
                         <td>
                             <form th:if="${administrador and a.entrada != null and a.salida == null}"
-                                th:action="@{/administracion/accesos/{id}/salida(id=${a.id})}" method="post"><button
+                                th:action="@{/administracion/accesos/{id}/salida(id=${a.id})}" method="post"><button class="btn btn-primary"
                                     type="submit">Registrar salida</button></form>
                             <form
                                 th:if="${!administrador and a.tipo == 'VISITANTE' and a.entrada == null and !a.cancelado}"
-                                th:action="@{/mis-visitas/{id}/cancelar(id=${a.id})}" method="post"><button
+                                th:action="@{/mis-visitas/{id}/cancelar(id=${a.id})}" method="post"><button class="btn btn-primary"
                                     type="submit">Cancelar visita</button></form>
                         </td>
                     </tr>
@@ -94,7 +96,7 @@
         </div>
     </main>
     <footer><a href="/panel">Volver al panel</a>
-        <form th:action="@{/cerrar-sesion}" method="post"><button type="submit">Cerrar sesión</button></form>
+        <form th:action="@{/cerrar-sesion}" method="post"><button class="btn btn-primary" type="submit">Cerrar sesión</button></form>
     </footer>
 </body>
 

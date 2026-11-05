@@ -5,23 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Habita · Tu próximo hogar</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="/estilos.css">
 </head>
 
 <body>
-    <header><a class="marca" href="/">▦ habita<span>CONDOMINIOS</span></a>
-        <nav><a href="/">Explorar</a><a href="/panel" th:if="${sesionIniciada}"
-                th:text="${esAdministrador ? 'Administración' : 'Mi espacio'}">Mi espacio</a><a href="/iniciar-sesion"
+    <header class="barra-navegacion navbar d-flex flex-wrap gap-3"><a class="marca" href="/">▦ habita<span>CONDOMINIOS</span></a>
+        <nav class="flex-wrap" aria-label="Navegación principal"><a class="btn boton-navegacion" href="/">Explorar</a><a class="btn boton-navegacion" href="/panel" th:if="${sesionIniciada}"
+                th:text="${esAdministrador ? 'Administración' : 'Mi espacio'}">Mi espacio</a><a class="btn boton-navegacion" href="/iniciar-sesion"
                 th:unless="${sesionIniciada}">Iniciar sesión</a></nav>
     </header>
-    <main>
-        <p><a class="boton" href="/administracion/accesos">Control de entradas y salidas</a></p>
+    <main class="container-fluid">
+        <p><a class="boton btn btn-primary" href="/administracion/accesos">Control de entradas y salidas</a></p>
         <div class="titulo-seccion">
             <div>
                 <p class="antetitulo">ADMINISTRACIÓN</p>
                 <h1>Todo en su lugar.</h1>
                 <p>Un panorama de tu comunidad y sus residentes.</p>
-            </div><a class="boton" href="/administracion/reporte.pdf">↓ Descargar reporte PDF</a>
+            </div><a class="boton btn btn-primary" href="/administracion/reporte.pdf">↓ Descargar reporte PDF</a>
         </div>
         <div class="estadisticas">
             <article><small>Condominios totales</small><strong th:text="${total}"></strong></article>
@@ -32,15 +34,15 @@
         </div>
         <h2>Directorio de residentes</h2>
         <p class="atenuado">Las rentas registradas no representan pagos cobrados.</p>
-        <div class="contenedor-tabla">
-            <table>
+        <div class="contenedor-tabla table-responsive">
+            <table class="table table-hover align-middle mb-0">
                 <thead>
                     <tr>
-                        <th>Residente</th>
-                        <th>Contacto</th>
-                        <th>Condominio</th>
-                        <th>Folio de identificación</th>
-                        <th>Inicio</th>
+                        <th scope="col">Residente</th>
+                        <th scope="col">Contacto</th>
+                        <th scope="col">Condominio</th>
+                        <th scope="col">Folio de identificación</th>
+                        <th scope="col">Inicio</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -59,8 +61,8 @@
             </table>
         </div>
     </main>
-    <footer><span class="marca">habita</span><span>Un lugar para vivir mejor. · Rentas en MXN</span>
-        <form th:if="${sesionIniciada}" th:action="@{/cerrar-sesion}" method="post"><button class="texto"
+    <footer><span class="marca">habita</span>
+        <form th:if="${sesionIniciada}" th:action="@{/cerrar-sesion}" method="post"><button class="btn btn-primary"
                 type="submit">Cerrar sesión</button></form>
     </footer>
 </body>

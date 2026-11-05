@@ -5,34 +5,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Habita · Tu próximo hogar</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="/estilos.css">
 </head>
 
 <body>
-    <header><a class="marca" href="/">▦ habita<span>CONDOMINIOS</span></a>
-        <nav><a href="/">Explorar</a><a href="/panel" th:if="${sesionIniciada}"
-                th:text="${esAdministrador ? 'Administración' : 'Mi espacio'}">Mi espacio</a><a href="/iniciar-sesion"
+    <header class="barra-navegacion navbar d-flex flex-wrap gap-3"><a class="marca" href="/">▦ habita<span>CONDOMINIOS</span></a>
+        <nav class="flex-wrap" aria-label="Navegación principal"><a class="btn boton-navegacion" href="/">Explorar</a><a class="btn boton-navegacion" href="/panel" th:if="${sesionIniciada}"
+                th:text="${esAdministrador ? 'Administración' : 'Mi espacio'}">Mi espacio</a><a class="btn boton-navegacion" href="/iniciar-sesion"
                 th:unless="${sesionIniciada}">Iniciar sesión</a></nav>
     </header>
-    <main>
-        <section class="contenedor-formulario">
+    <main class="container-fluid">
+        <section class="contenedor-formulario card shadow-sm">
             <p class="antetitulo">COMIENZA TU HISTORIA</p>
             <h1>Crea tu cuenta</h1>
             <p>Usaremos estos datos para identificarte como residente.</p>
-            <p class="aviso error" th:if="${error}" th:text="${error}"></p>
-            <form th:action="@{/registro}" method="post" th:object="${registro}"><label>Nombre completo y
-                    apellidos<input th:field="*{nombre}" autocomplete="name" minlength="5" maxlength="120"
-                        required></label><label>Correo electrónico<input type="email" th:field="*{correo}"
-                        autocomplete="email" maxlength="180" required></label><label>Teléfono<input type="tel"
+            <p class="aviso error alert alert-danger" role="alert" th:if="${error}" th:text="${error}"></p>
+            <form th:action="@{/registro}" method="post" th:object="${registro}"><label class="form-label">Nombre completo y
+                    apellidos<input class="form-control" th:field="*{nombre}" autocomplete="name" minlength="5" maxlength="120"
+                        required></label><label class="form-label">Correo electrónico<input class="form-control" type="email" th:field="*{correo}"
+                        autocomplete="email" maxlength="180" required></label><label class="form-label">Teléfono<input class="form-control" type="tel"
                         th:field="*{telefono}" autocomplete="tel" pattern="[+0-9 ()\-]{10,20}" maxlength="20"
-                        required></label><label>Contraseña<input type="password" name="contrasena" minlength="12"
+                        required></label><label class="form-label">Contraseña<input class="form-control" type="password" name="contrasena" minlength="12"
                         maxlength="72" autocomplete="new-password" required><small>Mínimo 12
-                        caracteres.</small></label><button>Crear cuenta →</button></form>
+                        caracteres.</small></label><button class="btn btn-primary">Crear cuenta →</button></form>
             <p>¿Ya tienes cuenta? <a href="/iniciar-sesion">Inicia sesión</a></p>
         </section>
     </main>
-    <footer><span class="marca">habita</span><span>Un lugar para vivir mejor. · Rentas en MXN</span>
-        <form th:if="${sesionIniciada}" th:action="@{/cerrar-sesion}" method="post"><button class="texto"
+    <footer><span class="marca">habita</span>
+        <form th:if="${sesionIniciada}" th:action="@{/cerrar-sesion}" method="post"><button class="btn btn-primary"
                 type="submit">Cerrar sesión</button></form>
     </footer>
 </body>
